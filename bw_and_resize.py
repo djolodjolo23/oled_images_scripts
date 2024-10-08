@@ -42,11 +42,11 @@ for i, line in enumerate(xbm_content):
         break
 
 header_array = xbm_content[array_start:]
-header_oled_image_name = os.path.splitext(full_image_name)[0] + '_oled_image.h'
+header_oled_image_name = os.path.splitext(image_name)[0] + '_oled_image.h'
 header_guard_name = os.path.basename(header_oled_image_name).replace('.', '_').upper()
 
 # Save the array into a C header file
-with open(os.path.join(header_files_folder, {}, 'w') as header_file:
+with open(os.path.join(header_files_folder, header_oled_image_name), 'w') as header_file:
     header_file.write('#include <cstdint>\n')
     header_file.write(f'#ifndef {header_guard_name}\n')
     header_file.write(f'#define {header_guard_name}\n\n\n')
