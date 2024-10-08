@@ -29,7 +29,7 @@ bw_image = resized_image.convert('1')
 os.makedirs(output_images_folder, exist_ok=True)
 
 # Save the XBM file to the output_images folder
-xbm_image_name = os.path.join(output_images_folder, os.path.basename(image_name) + '.xbm')
+xbm_image_name = os.path.join(output_images_folder, os.path.basename(image_name) + '_' + target_image_size + '.xbm')
 bw_image.save(xbm_image_name)
 
 with open(xbm_image_name, 'r') as xbm_file:
@@ -42,7 +42,7 @@ for i, line in enumerate(xbm_content):
         break
 
 header_array = xbm_content[array_start:]
-header_oled_image_name = os.path.splitext(image_name)[0] + '_oled_image.h'
+header_oled_image_name = os.path.splitext(image_name)[0] + '_oled_image_' + target_image_size + '.h'
 header_guard_name = os.path.basename(header_oled_image_name).replace('.', '_').upper()
 
 # Save the array into a C header file
@@ -50,7 +50,7 @@ with open(os.path.join(header_files_folder, header_oled_image_name), 'w') as hea
     header_file.write('#include <cstdint>\n')
     header_file.write(f'#ifndef {header_guard_name}\n')
     header_file.write(f'#define {header_guard_name}\n\n\n')
-    header_file.write(f'const unsigned char{image_name}_oled_image [] = {{\n')
+    header_file.write(f'const unsigned char {image_name}_oled_image [] = {{\n')
     for line in header_array[1:]:
         header_file.write(line)
     header_file.write('#endif\n')
